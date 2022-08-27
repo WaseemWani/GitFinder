@@ -15,6 +15,10 @@ class PRInfoTableViewCell: UITableViewCell {
     @IBOutlet var prClosedDateLabel: UILabel!
     @IBOutlet var userImageView: UIImageView!
     
+    static let identifier = "PRInfoTableViewCell"
+    static let nib = UINib(nibName: "PRInfoTableViewCell", bundle: Bundle.main)
+    static let estimatedHeight: CGFloat = 164.0
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
