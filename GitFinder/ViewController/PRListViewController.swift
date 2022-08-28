@@ -13,22 +13,27 @@ class PRListViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     
     // MARK: - Variables
-    var viewModel: PRListViewModel?
-    let errorMsg = " Failed to fetch data"
+    private var viewModel: PRListViewModel?
+    private var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = PRListViewModel()
         self.title = "Closed Pull Requests"
+        setupActivityIndicator()
         setupTableView()
         populateTableView()
     }
     
-    private func startStopActivityIndicator(isAnimating: Bool) {
+    private func setupActivityIndicator() {
         let activityIndicator = UIActivityIndicatorView(style: .medium)
         tableView.backgroundView = activityIndicator
         activityIndicator.color = .gray
-        isAnimating ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
+        self.activityIndicator = activityIndicator
+    }
+    
+    private func startStopActivityIndicator(shouldStart: Bool) {
+        shouldStart ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
     }
     
     private func setupTableView() {
@@ -38,11 +43,11 @@ class PRListViewController: UIViewController {
     }
     
     private func populateTableView() {
-        startStopActivityIndicator(isAnimating: true)
+        startStopActivityIndicator(shouldStart: true)
         viewModel?.fetchData { [weak self]  in
-            DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 if let dataSource = self?.viewModel?.dataSource, !dataSource.isEmpty {
-                    self?.startStopActivityIndicator(isAnimating: false)
+                    self?.startStopActivityIndicator(shouldStart: false)
                     self?.tableView.reloadData()
                 } else {
                     self?.tableView.isHidden = true
