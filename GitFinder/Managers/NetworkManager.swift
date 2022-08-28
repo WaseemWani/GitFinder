@@ -21,7 +21,7 @@ class NetworkManager {
         urlComponents.path = "/repos/WaseemWani/GitFinder/pulls"
         urlComponents.queryItems = {
           var queryItems = [URLQueryItem]()
-          queryItems.append(URLQueryItem(name: "state", value: "all"))
+          queryItems.append(URLQueryItem(name: "state", value: "closed"))
           return queryItems
         }()
         
