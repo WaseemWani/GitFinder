@@ -21,9 +21,15 @@ class PRListViewModel {
                     debugPrint(error.localizedDescription)
                     completion()
                 case .success(let data):
-                    self?.dataSource = data
-                    completion()
-            }
+                    if data.isEmpty {
+                        self?.dataSource = nil
+                        self?.errorMsg = "No data available!"
+                        completion()
+                    } else {
+                        self?.dataSource = data
+                        completion()
+                    }
+                }
         }
     }
     

@@ -18,10 +18,10 @@ class NetworkManager {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "api.github.com"
-        urlComponents.path = "/repos/WaseemWani/URLRequestDemo/pulls"
+        urlComponents.path = "/repos/WaseemWani/GitFinder/pulls"
         urlComponents.queryItems = {
           var queryItems = [URLQueryItem]()
-          queryItems.append(URLQueryItem(name: "state", value: "closed"))
+          queryItems.append(URLQueryItem(name: "state", value: "all"))
           return queryItems
         }()
         
