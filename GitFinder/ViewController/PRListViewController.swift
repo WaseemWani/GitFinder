@@ -41,7 +41,7 @@ class PRListViewController: UIViewController {
         startStopActivityIndicator(isAnimating: true)
         viewModel?.fetchData { [weak self]  in
             DispatchQueue.main.async {
-                if self?.viewModel?.dataSource != nil {
+                if let dataSource = self?.viewModel?.dataSource, !dataSource.isEmpty {
                     self?.startStopActivityIndicator(isAnimating: false)
                     self?.tableView.reloadData()
                 } else {

@@ -8,11 +8,9 @@
 import UIKit
 
 extension UIViewController {
-    func showErrorView(with message: String, completion: ((UIAlertAction) -> Void)?) {
+    func showErrorView(with message: String, completionHandler: ((UIAlertAction) -> Void)?) {
         let alert = UIAlertController(title: "Error!", message: message, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Retry", style: UIAlertAction.Style.default, handler: completion))
-        
-        // show the alert
+        alert.addAction(UIAlertAction(title: "Retry", style: UIAlertAction.Style.default, handler: completionHandler))
         self.present(alert, animated: true, completion: nil)
     }
 }
