@@ -43,11 +43,9 @@ class NetworkManager {
                 }
             } else if let err = error {
                 let res: Result = .error(err)
-                print("--", err.localizedDescription, res)
                 completion(res)
                 return
             }
-            
         }
         dataTask.resume()
     }
@@ -65,7 +63,6 @@ class NetworkManager {
             }
             completion(fetchedData)
         }
-        
         dataTask.resume()
     }
 }
