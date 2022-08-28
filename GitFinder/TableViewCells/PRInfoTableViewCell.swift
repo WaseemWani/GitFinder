@@ -9,16 +9,19 @@ import UIKit
 
 class PRInfoTableViewCell: UITableViewCell {
     
+    //MARK: - Outlets
     @IBOutlet var prTitleLabel: UILabel!
     @IBOutlet var userNameLabel: UILabel!
     @IBOutlet var prCreatedDateLabel: UILabel!
     @IBOutlet var prClosedDateLabel: UILabel!
     @IBOutlet var userImageView: UIImageView!
     
+    //MARK: - Variables
     static let identifier = "PRInfoTableViewCell"
     static let nib = UINib(nibName: "PRInfoTableViewCell", bundle: Bundle.main)
     static let estimatedHeight: CGFloat = 164.0
-
+    var viewModel: PRInfoTableViewCellViewModel?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -35,10 +38,23 @@ class PRInfoTableViewCell: UITableViewCell {
         userImageView.layer.borderColor = UIColor.lightGray.cgColor
     }
     
-    func configure(with data: DataModel) {
-        prTitleLabel.text = data.prTitle
-        userNameLabel.text = data.name
-        prCreatedDateLabel.text = data.prCreatedDate
-        prClosedDateLabel.text = data.prClosedDate
+    func configure() {
+        prTitleLabel.text = viewModel?.dataModel.prTitle
+        userNameLabel.text = viewModel?.dataModel.user?.login
+        prCreatedDateLabel.text = Utilities.getFormatted(from: viewModel?.dataModel.prCreatedDate ?? "")
+        prClosedDateLabel.text = Utilities.getFormatted(from: viewModel?.dataModel.prClosedDate ?? "")
+        fetchUserImage(urlString: viewModel?.dataModel.user?.userImage)
+    }
+    
+    private func fetchUserImage(urlString: String?) {
+        viewModel?.fetchUserImage(urlStr: urlString) { [weak self] imageData in
+            if let imgData = imageData {
+                DispatchQueue.main.async {
+                    self?.userImageView?.image = UIImage(data: imgData)
+                }
+            } else {
+                debugPrint("failed to fetch profile image")
+            }
+        }
     }
 }
